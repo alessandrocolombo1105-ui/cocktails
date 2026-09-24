@@ -48,6 +48,10 @@
   margin: 0 auto;
   aspect-ratio: 1;
 
+  @media (max-width: 52rem) {
+    width: min(75%, 20rem);
+  }
+
   &::before {
     content: '';
     position: absolute;
