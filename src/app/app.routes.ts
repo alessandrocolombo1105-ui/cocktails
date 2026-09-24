@@ -19,6 +19,12 @@ export const routes: Routes = [
   ...browseRoutes(INGREDIENT_BROWSE),
   ...ALPHABET_ROUTES,
   {
+    path: 'drink/:id',
+    title: 'Cocktail | Cocktails',
+    loadComponent: () =>
+      import('./features/drink-detail/drink-detail').then((m) => m.DrinkDetail),
+  },
+  {
     path: '**',
     title: 'Pagina non trovata | Cocktails',
     loadComponent: () => import('./features/not-found/not-found').then((m) => m.NotFound),
