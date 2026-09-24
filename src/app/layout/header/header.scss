@@ -3,13 +3,15 @@
   top: 0;
   z-index: 10;
   border-bottom: 1px solid var(--color-border);
-  background: var(--color-surface);
+  background: rgb(17 12 18 / 0.72);
+  backdrop-filter: blur(14px);
 }
 
 .inner {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
+  justify-content: space-between;
   gap: 0.5rem 1.5rem;
   max-width: var(--container-width);
   margin: 0 auto;
@@ -17,15 +19,22 @@
 }
 
 .brand {
-  font-size: 1.25rem;
+  font-family: var(--font-display);
+  font-size: 1.5rem;
   font-weight: 700;
   color: var(--color-text);
   text-decoration: none;
+
+  span {
+    color: var(--color-primary);
+  }
 }
 
 nav {
   min-width: 0;
+  max-width: 100%;
   overflow-x: auto;
+  scrollbar-width: none;
 }
 
 ul {
@@ -38,16 +47,19 @@ ul {
 
 nav a {
   display: block;
-  padding: 0.375rem 0.75rem;
+  padding: 0.4rem 0.9rem;
   border-radius: 999px;
   color: var(--color-text-muted);
   font-weight: 500;
   text-decoration: none;
   white-space: nowrap;
+  transition:
+    color 0.15s ease,
+    background 0.15s ease;
 
   &:hover {
     color: var(--color-text);
-    background: var(--color-bg);
+    background: var(--color-surface);
   }
 
   &.active {

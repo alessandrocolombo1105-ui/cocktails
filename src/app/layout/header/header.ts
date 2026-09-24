@@ -9,7 +9,7 @@ import { NAV_SECTIONS } from '../../core/navigation';
   template: `
     <header class="header">
       <div class="inner">
-        <a class="brand" routerLink="/">🍹 Cocktails</a>
+        <a class="brand" routerLink="/">Cocktail<span>s</span></a>
         <nav aria-label="Esplora">
           <ul>
             @for (section of sections; track section.path) {
