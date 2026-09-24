@@ -109,6 +109,9 @@ import { BrowseConfig } from './browse-config';
           }
           <h2>{{ config.resultsTitle(selected) }}</h2>
         </header>
+        @if (config.resultsNote) {
+          <p class="note" role="note">ℹ️ {{ config.resultsNote }}</p>
+        }
         @if (drinksState(); as drinks) {
           <app-drink-results
             [state]="drinks"

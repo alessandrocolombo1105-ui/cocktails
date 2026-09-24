@@ -150,6 +150,7 @@ describe('Browse (ingredients)', () => {
     expect(api.filterByIngredient).toHaveBeenCalledWith('Lime');
     expect(el.querySelector('h2')!.textContent).toContain('Con Lime');
     expect(el.querySelector('.hero-image')!.getAttribute('src')).toContain('Lime-Medium.png');
+    expect(el.querySelector('.note')!.textContent).toContain('chiave API gratuita');
     expect(el.querySelectorAll('app-drink-card').length).toBe(1);
   });
 });

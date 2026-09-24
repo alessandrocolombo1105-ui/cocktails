@@ -16,6 +16,8 @@ export interface BrowseConfig {
   optionImage?: (value: string, size: 'small' | 'medium') => string;
   /** Se presente, mostra un campo per filtrare l'elenco dei valori. */
   filterPlaceholder?: string;
+  /** Nota informativa mostrata sopra i risultati. */
+  resultsNote?: string;
 }
 
 export const CATEGORY_BROWSE: BrowseConfig = {
@@ -45,4 +47,6 @@ export const INGREDIENT_BROWSE: BrowseConfig = {
   resultsTitle: (ingredient) => `Con ${ingredient}`,
   optionImage: (ingredient, size) => ingredientImage(ingredient, size),
   filterPlaceholder: 'Filtra gli ingredienti… (es. rum, lime)',
+  resultsNote:
+    'Con la chiave API gratuita di TheCocktailDB il filtro per ingrediente restituisce un solo cocktail di esempio.',
 };
