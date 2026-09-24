@@ -6,7 +6,7 @@ export interface DrinkSummary {
 }
 
 /** Numeri 1..15 usati dai campi `strIngredientN` / `strMeasureN`. */
-type IngredientIndex = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15;
+export type IngredientIndex = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15;
 
 type IngredientFields = {
   [K in IngredientIndex as `strIngredient${K}`]: string | null;
@@ -29,11 +29,15 @@ export interface DrinkIngredient {
   measure: string | null;
 }
 
-/** Drink normalizzato usato dalla UI. */
-export interface Drink {
+/** Elemento minimo mostrato nelle liste/griglie. */
+export interface DrinkListItem {
   id: string;
   name: string;
   thumb: string;
+}
+
+/** Drink normalizzato usato dalla UI. */
+export interface Drink extends DrinkListItem {
   category: string | null;
   glass: string | null;
   alcoholic: string | null;
