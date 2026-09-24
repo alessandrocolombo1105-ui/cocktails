@@ -39,6 +39,12 @@ export class CocktailApiService {
     );
   }
 
+  getRandomDrink(): Observable<Drink | null> {
+    return this.get<ApiDrink>('random.php', {}).pipe(
+      map((drinks) => (drinks.length ? toDrink(drinks[0]) : null)),
+    );
+  }
+
   getCategories(): Observable<string[]> {
     return this.get<CategoryItem>('list.php', { c: 'list' }).pipe(
       map((items) => sortNames(items.map((item) => item.strCategory))),

@@ -86,6 +86,15 @@ describe('CocktailApiService', () => {
     expect(instructions).toBe('Shakerare con ghiaccio.');
   });
 
+  it('fetches a random drink', () => {
+    let name: string | undefined;
+    service.getRandomDrink().subscribe((drink) => (name = drink?.name));
+
+    http.expectOne(`${BASE}/random.php`).flush({ drinks: [apiDrink()] });
+
+    expect(name).toBe('Margarita');
+  });
+
   it('returns null when a drink is not found', () => {
     let result: unknown = 'unset';
     service.getDrinkById('0').subscribe((drink) => (result = drink));
