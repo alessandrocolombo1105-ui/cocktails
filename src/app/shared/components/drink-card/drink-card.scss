@@ -1,3 +1,5 @@
+// Card "fluttuante": la foto è ritagliata in un cerchio sfumato così lo sfondo
+// originale sparisce, con un'ombra ellittica sotto come un bicchiere sospeso.
 :host {
   display: block;
 }
@@ -5,43 +7,96 @@
 .card {
   display: flex;
   flex-direction: column;
-  height: 100%;
-  overflow: hidden;
-  border: 1px solid var(--color-border);
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem 0.25rem 1rem;
   border-radius: var(--radius);
-  background: var(--color-surface);
   color: inherit;
   text-decoration: none;
-  transition:
-    transform 0.15s ease,
-    box-shadow 0.15s ease;
-
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgb(0 0 0 / 0.12);
-  }
+  text-align: center;
 
   &:focus-visible {
     outline: 2px solid var(--color-primary);
-    outline-offset: 2px;
+    outline-offset: 4px;
   }
 }
 
-img {
+.stage {
+  position: relative;
+  display: block;
   width: 100%;
+  aspect-ratio: 1;
+
+  // Alone colorato dietro al bicchiere, visibile all'hover.
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 12%;
+    border-radius: 50%;
+    background: radial-gradient(circle, var(--glow-amber), transparent 70%);
+    opacity: 0;
+    transform: scale(0.8);
+    transition:
+      opacity 0.3s ease,
+      transform 0.3s ease;
+  }
+
+  // Ombra "a terra".
+  &::after {
+    content: '';
+    position: absolute;
+    left: 22%;
+    right: 22%;
+    bottom: 0;
+    height: 9%;
+    border-radius: 50%;
+    background: rgb(0 0 0 / 0.6);
+    filter: blur(8px);
+    transition:
+      transform 0.3s ease,
+      opacity 0.3s ease;
+  }
+}
+
+.glass {
+  position: relative;
+  z-index: 1;
+  width: 86%;
   height: auto;
+  margin: 0 auto;
   aspect-ratio: 1;
   object-fit: cover;
-  background: var(--color-border);
+  border-radius: 50%;
+  background: var(--color-surface-strong);
+  mask-image: radial-gradient(circle at 50% 50%, #000 56%, transparent 71%);
+  transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
 .name {
-  padding: 0.75rem;
+  font-family: var(--font-display);
+  font-size: 1.05rem;
   font-weight: 600;
+  line-height: 1.25;
+  transition: color 0.2s ease;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .card {
-    transition: none;
+.card:hover,
+.card:focus-visible {
+  .glass {
+    transform: translateY(-10px) scale(1.05) rotate(-3deg);
+  }
+
+  .stage::before {
+    opacity: 1;
+    transform: scale(1.15);
+  }
+
+  .stage::after {
+    transform: scaleX(0.8);
+    opacity: 0.6;
+  }
+
+  .name {
+    color: var(--color-primary);
   }
 }

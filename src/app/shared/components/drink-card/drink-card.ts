@@ -9,7 +9,16 @@ import { drinkImage } from '../../utils/drink-image';
   imports: [RouterLink],
   template: `
     <a class="card" [routerLink]="['/drink', drink().id]">
-      <img [src]="image()" [alt]="drink().name" width="350" height="350" loading="lazy" />
+      <span class="stage">
+        <img
+          class="glass"
+          [src]="image()"
+          [alt]="drink().name"
+          width="350"
+          height="350"
+          loading="lazy"
+        />
+      </span>
       <span class="name">{{ drink().name }}</span>
     </a>
   `,

@@ -22,8 +22,8 @@ import { DrinkCard } from '../drink-card/drink-card';
 
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr));
-      gap: 1rem;
+      grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr));
+      gap: 1.5rem 1rem;
       margin: 0;
       padding: 0;
       list-style: none;
