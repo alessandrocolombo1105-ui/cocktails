@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { CATEGORY_BROWSE } from './features/browse/browse-config';
+import { CATEGORY_BROWSE, GLASS_BROWSE } from './features/browse/browse-config';
 import { browseRoutes } from './features/browse/browse.routes';
 
 export const routes: Routes = [
@@ -14,6 +14,7 @@ export const routes: Routes = [
     loadComponent: () => import('./features/search/search').then((m) => m.Search),
   },
   ...browseRoutes(CATEGORY_BROWSE),
+  ...browseRoutes(GLASS_BROWSE),
   {
     path: '**',
     title: 'Pagina non trovata | Cocktails',

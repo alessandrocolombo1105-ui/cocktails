@@ -21,3 +21,12 @@ export const CATEGORY_BROWSE: BrowseConfig = {
   loadDrinks: (api, category) => api.filterByCategory(category),
   resultsTitle: (category) => `Categoria: ${category}`,
 };
+
+export const GLASS_BROWSE: BrowseConfig = {
+  title: 'Bicchieri',
+  intro: 'Scegli un bicchiere per scoprire i cocktail che vi si servono.',
+  basePath: '/glasses',
+  loadOptions: (api) => api.getGlasses(),
+  loadDrinks: (api, glass) => api.filterByGlass(glass),
+  resultsTitle: (glass) => `Bicchiere: ${glass}`,
+};

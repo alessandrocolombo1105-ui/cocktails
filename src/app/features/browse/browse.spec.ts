@@ -4,7 +4,7 @@ import { RouterTestingHarness } from '@angular/router/testing';
 import { of, throwError } from 'rxjs';
 import { CocktailApiService } from '../../core/services/cocktail-api.service';
 import { Browse } from './browse';
-import { CATEGORY_BROWSE } from './browse-config';
+import { CATEGORY_BROWSE, GLASS_BROWSE } from './browse-config';
 import { browseRoutes } from './browse.routes';
 
 describe('Browse (categories)', () => {
@@ -63,5 +63,31 @@ describe('Browse (categories)', () => {
     api.filterByCategory.mockReturnValueOnce(of([]));
     const { el } = await navigate('/categories/Cocoa');
     expect(el.textContent).toContain('Nessun cocktail disponibile');
+  });
+});
+
+describe('Browse (glasses)', () => {
+  it('lists glasses and loads drinks for the selected one', async () => {
+    const api = {
+      getGlasses: vi.fn(() => of(['Highball glass', 'Shot glass'])),
+      filterByGlass: vi.fn(() => of([{ id: '2', name: 'B-52', thumb: 'https://img.test/2.jpg' }])),
+    };
+    TestBed.configureTestingModule({
+      providers: [
+        provideRouter(browseRoutes(GLASS_BROWSE), withComponentInputBinding()),
+        { provide: CocktailApiService, useValue: api },
+      ],
+    });
+
+    const harness = await RouterTestingHarness.create();
+    await harness.navigateByUrl('/glasses/Shot%20glass', Browse);
+    harness.detectChanges();
+    const el = harness.routeNativeElement as HTMLElement;
+
+    expect(el.querySelector('h1')!.textContent).toContain('Bicchieri');
+    expect(el.querySelectorAll('a.chip').length).toBe(2);
+    expect(api.filterByGlass).toHaveBeenCalledWith('Shot glass');
+    expect(el.querySelector('h2')!.textContent).toContain('Bicchiere: Shot glass');
+    expect(el.querySelectorAll('app-drink-card').length).toBe(1);
   });
 });
