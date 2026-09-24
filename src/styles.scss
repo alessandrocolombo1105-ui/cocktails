@@ -1,1 +1,65 @@
-/* You can add global styles to this file, and also import other style files */
+:root {
+  --color-bg: #faf7f2;
+  --color-surface: #ffffff;
+  --color-text: #1f1a17;
+  --color-text-muted: #6b625c;
+  --color-border: #e6dfd6;
+  --color-primary: #c2410c;
+  --color-primary-contrast: #ffffff;
+  --color-danger: #b91c1c;
+  --radius: 0.75rem;
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-bg: #171412;
+    --color-surface: #221e1b;
+    --color-text: #f3eee9;
+    --color-text-muted: #a89f97;
+    --color-border: #3a332e;
+    --color-primary: #fb923c;
+    --color-primary-contrast: #1f1a17;
+    --color-danger: #f87171;
+    color-scheme: dark;
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  background: var(--color-bg);
+  color: var(--color-text);
+  line-height: 1.5;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+.button {
+  padding: 0.5rem 1.25rem;
+  border: 0;
+  border-radius: 999px;
+  background: var(--color-primary);
+  color: var(--color-primary-contrast);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+
+  &:hover {
+    filter: brightness(1.08);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+}
