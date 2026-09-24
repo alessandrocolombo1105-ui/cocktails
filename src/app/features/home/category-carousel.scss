@@ -1,0 +1,57 @@
+:host {
+  display: block;
+}
+
+.skeleton {
+  .title {
+    display: block;
+    width: 12rem;
+    height: 1.75rem;
+    margin-bottom: 1.25rem;
+    border-radius: 0.5rem;
+    background: var(--color-surface);
+    animation: pulse 1.4s ease-in-out infinite;
+  }
+
+  .row {
+    display: flex;
+    gap: 1rem;
+    overflow: hidden;
+  }
+
+  .circle {
+    flex: 0 0 clamp(9.5rem, 40vw, 13rem);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: radial-gradient(circle, var(--color-surface-strong) 55%, transparent 71%);
+    animation: pulse 1.4s ease-in-out infinite;
+  }
+}
+
+.error {
+  h2 {
+    margin: 0 0 0.5rem;
+  }
+
+  p {
+    margin: 0;
+    color: var(--color-text-muted);
+  }
+}
+
+.retry {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--color-primary);
+  font: inherit;
+  font-weight: 600;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+@keyframes pulse {
+  50% {
+    opacity: 0.45;
+  }
+}

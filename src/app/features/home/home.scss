@@ -1,42 +1,84 @@
 .hero {
-  padding: 2rem 0;
-  text-align: center;
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  align-items: center;
+  gap: 2rem;
+  padding: 1.5rem 0 2.5rem;
 
-  h1 {
-    margin: 0 0 0.5rem;
-    font-size: clamp(1.75rem, 5vw, 2.5rem);
-  }
+  @media (max-width: 52rem) {
+    grid-template-columns: 1fr;
+    text-align: center;
 
-  p {
-    margin: 0 auto;
-    max-width: 36rem;
-    color: var(--color-text-muted);
+    .cta {
+      justify-content: center;
+    }
   }
+}
+
+.eyebrow {
+  margin: 0 0 0.75rem;
+  color: var(--color-accent);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+h1 {
+  margin: 0 0 1rem;
+  font-size: clamp(2.4rem, 6vw, 4rem);
+
+  em {
+    // Il padding evita che il corsivo venga tagliato da background-clip.
+    padding-right: 0.12em;
+    font-style: italic;
+    background: linear-gradient(120deg, var(--color-primary), var(--color-accent));
+    background-clip: text;
+    color: transparent;
+  }
+}
+
+.lead {
+  margin: 0 0 1.75rem;
+  max-width: 34rem;
+  color: var(--color-text-muted);
+  font-size: 1.1rem;
+
+  @media (max-width: 52rem) {
+    margin-inline: auto;
+  }
+}
+
+.cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
 }
 
 .modes {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
-  gap: 1rem;
-  margin: 0;
-  padding: 0;
-  list-style: none;
+  grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+  gap: 0.75rem;
+  margin-bottom: 3rem;
 }
 
 .mode {
   display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-  height: 100%;
-  padding: 1.25rem;
+  align-items: center;
+  gap: 0.875rem;
+  padding: 0.875rem 1rem;
   border: 1px solid var(--color-border);
   border-radius: var(--radius);
   background: var(--color-surface);
   color: inherit;
   text-decoration: none;
+  transition:
+    border-color 0.15s ease,
+    transform 0.15s ease;
 
   &:hover {
     border-color: var(--color-primary);
+    transform: translateY(-2px);
   }
 
   &:focus-visible {
@@ -46,14 +88,29 @@
 }
 
 .icon {
-  font-size: 2rem;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 50%;
+  background: rgb(255 255 255 / 0.06);
+  font-size: 1.4rem;
 }
 
 .label {
-  font-size: 1.125rem;
+  display: block;
   font-weight: 600;
 }
 
 .description {
+  display: block;
   color: var(--color-text-muted);
+  font-size: 0.875rem;
+}
+
+.rows {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
 }
