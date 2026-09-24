@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { ALPHABET_ROUTES } from './features/alphabet/alphabet.routes';
 import { CATEGORY_BROWSE, GLASS_BROWSE, INGREDIENT_BROWSE } from './features/browse/browse-config';
 import { browseRoutes } from './features/browse/browse.routes';
 
@@ -16,6 +17,7 @@ export const routes: Routes = [
   ...browseRoutes(CATEGORY_BROWSE),
   ...browseRoutes(GLASS_BROWSE),
   ...browseRoutes(INGREDIENT_BROWSE),
+  ...ALPHABET_ROUTES,
   {
     path: '**',
     title: 'Pagina non trovata | Cocktails',
