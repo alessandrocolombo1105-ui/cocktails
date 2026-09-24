@@ -3,8 +3,28 @@ h1 {
 }
 
 .intro {
-  margin: 0 0 1rem;
+  margin: 0 0 1.25rem;
   color: var(--color-text-muted);
+}
+
+.filter {
+  margin-bottom: 1rem;
+
+  input {
+    width: 100%;
+    max-width: 28rem;
+    padding: 0.625rem 1rem;
+    border: 1px solid var(--color-border);
+    border-radius: 999px;
+    background: var(--color-surface);
+    color: var(--color-text);
+    font: inherit;
+
+    &:focus-visible {
+      outline: 2px solid var(--color-primary);
+      outline-offset: 1px;
+    }
+  }
 }
 
 .options {
@@ -41,10 +61,94 @@ h1 {
   }
 }
 
+// Riquadri con immagine (ingredienti): griglia quando nulla è selezionato...
+.options--tiles {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(7.5rem, 1fr));
+  gap: 0.75rem;
+}
+
+// ...striscia orizzontale scorrevole quando un valore è selezionato.
+.options--strip {
+  position: relative;
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  padding: 0.25rem 0.25rem 0.75rem;
+  scroll-snap-type: x proximity;
+  scrollbar-width: thin;
+
+  li {
+    flex: 0 0 7.5rem;
+    scroll-snap-align: center;
+  }
+}
+
+.tile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.375rem;
+  height: 100%;
+  padding: 0.75rem 0.5rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-size: 0.875rem;
+  text-align: center;
+  text-decoration: none;
+  transition:
+    border-color 0.15s ease,
+    transform 0.15s ease;
+
+  img {
+    width: 4rem;
+    height: 4rem;
+    object-fit: contain;
+    filter: drop-shadow(0 6px 8px rgb(0 0 0 / 0.45));
+    transition: transform 0.25s ease;
+  }
+
+  &:hover {
+    border-color: var(--color-primary);
+
+    img {
+      transform: translateY(-4px) scale(1.08);
+    }
+  }
+
+  &.active {
+    border-color: var(--color-primary);
+    background: rgb(245 165 36 / 0.14);
+    color: var(--color-primary);
+    font-weight: 600;
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+}
+
 .results {
   margin-top: 2rem;
+}
+
+.results-head {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
 
   h2 {
-    margin: 0 0 0.5rem;
+    margin: 0;
   }
+}
+
+.hero-image {
+  width: 5.5rem;
+  height: 5.5rem;
+  object-fit: contain;
+  filter: drop-shadow(0 10px 14px rgb(0 0 0 / 0.5));
 }

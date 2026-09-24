@@ -4,7 +4,7 @@ import { RouterTestingHarness } from '@angular/router/testing';
 import { of, throwError } from 'rxjs';
 import { CocktailApiService } from '../../core/services/cocktail-api.service';
 import { Browse } from './browse';
-import { CATEGORY_BROWSE, GLASS_BROWSE } from './browse-config';
+import { CATEGORY_BROWSE, GLASS_BROWSE, INGREDIENT_BROWSE } from './browse-config';
 import { browseRoutes } from './browse.routes';
 
 describe('Browse (categories)', () => {
@@ -88,6 +88,68 @@ describe('Browse (glasses)', () => {
     expect(el.querySelectorAll('a.chip').length).toBe(2);
     expect(api.filterByGlass).toHaveBeenCalledWith('Shot glass');
     expect(el.querySelector('h2')!.textContent).toContain('Bicchiere: Shot glass');
+    expect(el.querySelectorAll('app-drink-card').length).toBe(1);
+  });
+});
+
+describe('Browse (ingredients)', () => {
+  let api: { getIngredients: ReturnType<typeof vi.fn>; filterByIngredient: ReturnType<typeof vi.fn> };
+
+  beforeEach(() => {
+    api = {
+      getIngredients: vi.fn(() => of(['Gin', 'Light rum', 'Lime', 'Vodka'])),
+      filterByIngredient: vi.fn(() =>
+        of([{ id: '3', name: 'Gimlet', thumb: 'https://img.test/3.jpg' }]),
+      ),
+    };
+    TestBed.configureTestingModule({
+      providers: [
+        provideRouter(browseRoutes(INGREDIENT_BROWSE), withComponentInputBinding()),
+        { provide: CocktailApiService, useValue: api },
+      ],
+    });
+  });
+
+  async function navigate(url: string) {
+    const harness = await RouterTestingHarness.create();
+    await harness.navigateByUrl(url, Browse);
+    harness.detectChanges();
+    return { harness, el: harness.routeNativeElement as HTMLElement };
+  }
+
+  it('shows ingredient tiles with transparent images', async () => {
+    const { el } = await navigate('/ingredients');
+    const tiles = el.querySelectorAll('a.tile');
+    expect(tiles.length).toBe(4);
+    expect(tiles[1].querySelector('img')!.getAttribute('src')).toBe(
+      'https://www.thecocktaildb.com/images/ingredients/Light%20rum-Small.png',
+    );
+    expect(el.querySelector('.options--strip')).toBeNull();
+  });
+
+  it('filters the ingredient list', async () => {
+    const { el, harness } = await navigate('/ingredients');
+    const input = el.querySelector('#options-filter') as HTMLInputElement;
+
+    input.value = 'RU';
+    input.dispatchEvent(new Event('input'));
+    harness.detectChanges();
+    expect([...el.querySelectorAll('a.tile')].map((t) => t.textContent!.trim())).toEqual([
+      'Light rum',
+    ]);
+
+    input.value = 'xyz';
+    input.dispatchEvent(new Event('input'));
+    harness.detectChanges();
+    expect(el.textContent).toContain('Nessuna voce corrisponde a “xyz”');
+  });
+
+  it('switches to a strip and loads drinks when an ingredient is selected', async () => {
+    const { el } = await navigate('/ingredients/Lime');
+    expect(el.querySelector('.options--strip')).not.toBeNull();
+    expect(api.filterByIngredient).toHaveBeenCalledWith('Lime');
+    expect(el.querySelector('h2')!.textContent).toContain('Con Lime');
+    expect(el.querySelector('.hero-image')!.getAttribute('src')).toContain('Lime-Medium.png');
     expect(el.querySelectorAll('app-drink-card').length).toBe(1);
   });
 });
