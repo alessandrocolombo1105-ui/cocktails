@@ -7,23 +7,28 @@ import {
   linkedSignal,
 } from '@angular/core';
 import { takeUntilDestroyed, toObservable, toSignal } from '@angular/core/rxjs-interop';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { combineLatest, debounceTime, distinctUntilChanged, of, startWith, Subject, switchMap } from 'rxjs';
 import { CocktailApiService } from '../../core/services/cocktail-api.service';
 import { DrinkResults } from '../../shared/components/drink-results/drink-results';
 import { toRequestState } from '../../shared/utils/request-state';
 
 const SEARCH_DEBOUNCE_MS = 350;
+const SUGGESTIONS = ['Margarita', 'Mojito', 'Negroni', 'Martini', 'Daiquiri', 'Cosmopolitan'];
 
 @Component({
   selector: 'app-search',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [DrinkResults],
+  imports: [DrinkResults, RouterLink],
   template: `
-    <h1>Cerca un cocktail</h1>
+    <header class="head">
+      <h1>Cerca un cocktail</h1>
+      <p class="intro">Scrivi il nome di un drink: i risultati arrivano mentre digiti.</p>
+    </header>
 
     <form class="search" role="search" (submit)="$event.preventDefault(); submit()">
       <label for="search-input" class="visually-hidden">Nome del cocktail</label>
+      <span class="icon" aria-hidden="true">🔍</span>
       <input
         id="search-input"
         type="search"
@@ -42,7 +47,16 @@ const SEARCH_DEBOUNCE_MS = 350;
         (retry)="retry$.next()"
       />
     } @else {
-      <p class="hint">Digita il nome di un cocktail per iniziare la ricerca.</p>
+      <section class="suggestions">
+        <p class="hint">Digita il nome di un cocktail per iniziare la ricerca, oppure prova:</p>
+        <ul>
+          @for (name of suggestions; track name) {
+            <li>
+              <a class="suggestion" routerLink="." [queryParams]="{ q: name }">{{ name }}</a>
+            </li>
+          }
+        </ul>
+      </section>
     }
   `,
   styleUrl: './search.scss',
@@ -59,6 +73,7 @@ export class Search {
   /** Testo nel campo: segue l'URL (es. back del browser) ma è modificabile localmente. */
   protected readonly term = linkedSignal(() => this.q() ?? '');
 
+  protected readonly suggestions = SUGGESTIONS;
   protected readonly retry$ = new Subject<void>();
   private readonly input$ = new Subject<string>();
 

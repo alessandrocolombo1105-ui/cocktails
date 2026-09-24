@@ -28,6 +28,9 @@ describe('Search', () => {
     const el = await render();
     expect(el.textContent).toContain('Digita il nome');
     expect(searchByName).not.toHaveBeenCalled();
+    const suggestion = el.querySelector('.suggestion')!;
+    expect(suggestion.textContent).toContain('Margarita');
+    expect(suggestion.getAttribute('href')).toContain('q=Margarita');
   });
 
   it('shows the loading state while fetching', async () => {
